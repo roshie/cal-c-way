@@ -2,12 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'normalcalc.dart';
+//import 'scientificcalc.dart';
+
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      primarySwatch: Colors.deepPurple,
-    ),
     home: LoginView(),
   ));
 }
@@ -25,7 +25,7 @@ class _LoginViewState extends State<LoginView> {
     if (_password.text == "helloworld") {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => NormalCalculator()),
+          MaterialPageRoute(builder: (context) => normalCalculator()),
         );
 
 
