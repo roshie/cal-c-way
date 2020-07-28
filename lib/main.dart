@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'drawer.dart';
 
 import 'normalcalc.dart';
 //import 'scientificcalc.dart';
@@ -18,25 +19,26 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
-  String helpertext = "";
+  String passhelpertext = "";
+  String userhelpertext = "";
 
   _onSubmit() {
+
     if (_password.text == "helloworld") {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => normalCalculator()),
-        );
+      passhelpertext = "";
+      setState(() {
 
-
+      });
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()),);
     }
     else {
-      helpertext = "Incorrect Password";
+      passhelpertext = "Incorrect Password";
       setState(() {
 
       });
     }
-
   }
 
 
@@ -56,13 +58,8 @@ class _LoginViewState extends State<LoginView> {
                 padding: const EdgeInsets.only(top: 0),
                 child: Container(
 
-                  height: 350,
+                  height: 400,
                   width: 350,
-//                decoration: BoxDecoration(
-//                    color: Colors.white.withOpacity(0.5),
-//                  border: Border.all(color: Colors.grey, width: 1),
-//                  borderRadius: BorderRadius.all(Radius.circular(10.0))
-//                ),
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -81,6 +78,7 @@ class _LoginViewState extends State<LoginView> {
                             primaryColorDark: Colors.white,
                           ),
                           child: new TextField(
+                            controller: _username,
                             style: new TextStyle(
                               color: Colors.white,
                               fontSize: 20
@@ -91,7 +89,8 @@ class _LoginViewState extends State<LoginView> {
                                 hintText: 'Username or email',
                                 hintStyle: TextStyle(color: Colors.white),
                                 labelText: 'Username',
-
+                                helperText: userhelpertext.toString(),
+                                helperStyle: TextStyle(fontSize: 12, color: Colors.red),
                                 prefixIcon: const Icon(
                                   Icons.person,
                                   color: Colors.white,
@@ -120,7 +119,7 @@ class _LoginViewState extends State<LoginView> {
                                     borderSide: new BorderSide(color: Colors.white)),
                                 hintText: 'Password',
                                 hintStyle: TextStyle(color: Colors.white),
-                                helperText: helpertext.toString(),
+                                helperText: passhelpertext.toString(),
                                 helperStyle: TextStyle(fontSize: 12, color: Colors.red),
                                 labelText: 'Password',
                                 prefixIcon: const Icon(
