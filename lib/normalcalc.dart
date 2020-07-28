@@ -401,11 +401,6 @@ class _normalCalculatorState extends State<normalCalculator> {
           ),
         ),
 
-
-
-
-
-
     );
   }
 }
