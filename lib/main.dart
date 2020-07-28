@@ -28,9 +28,6 @@ class _LoginViewState extends State<LoginView> {
 
     if (_password.text == "helloworld") {
       passhelpertext = "";
-      setState(() {
-
-      });
       Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()),);
     }
     else {
@@ -80,8 +77,8 @@ class _LoginViewState extends State<LoginView> {
                           child: new TextField(
                             controller: _username,
                             style: new TextStyle(
-                              color: Colors.white,
-                              fontSize: 20
+                                color: Colors.white,
+                                fontSize: 20
                             ),
                             decoration: new InputDecoration(
                                 border: new OutlineInputBorder(
@@ -141,13 +138,13 @@ class _LoginViewState extends State<LoginView> {
                           height: 50,
                           child: Center(child: Text("Sign in", style: TextStyle(fontSize: 20, ),)),
                           decoration: BoxDecoration(
-                          color: Colors.white,
+                              color: Colors.white,
                               boxShadow: [BoxShadow(
                                 color: Colors.black,
                                 blurRadius: 3.0,
                               ),],
-                        borderRadius: BorderRadius.all(Radius.circular(50.0))
-                    ),
+                              borderRadius: BorderRadius.all(Radius.circular(50.0))
+                          ),
                         ),
                       )
                     ],
@@ -164,26 +161,3 @@ class _LoginViewState extends State<LoginView> {
 }
 
 
-class NormalCalculator extends StatefulWidget {
-  _NormalCalculatorState createState() => _NormalCalculatorState();
-
-}
-
-class _NormalCalculatorState extends State<NormalCalculator> {
-  TextEditingController _password = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children:[
-        Text("Normal Calculator"),
-        RaisedButton(
-          child: Text("Go Back"),
-          onPressed: () { Navigator.pop(context);
-
-          },
-        )
-      ]),
-    );
-  }
-}

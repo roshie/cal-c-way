@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_new_app/webview.dart';
 import 'scientificcalc.dart';
 import 'normalcalc.dart';
 
@@ -12,8 +13,10 @@ class DrawerItem {
 class HomeScreen extends StatefulWidget {
 
   var drawerItems = [
-    new DrawerItem("Dashboard", Icons.home),
-    new DrawerItem("Dashboard", Icons.home),
+    new DrawerItem("Sign out", Icons.vpn_key),
+    new DrawerItem("Normal Calculator", Icons.grid_on),
+    new DrawerItem("Scientific Caluclator", Icons.gradient),
+    new DrawerItem("Explore Chennai - Website", Icons.web),
   ];
 
   @override
@@ -26,15 +29,28 @@ class HomeScreenState extends State<HomeScreen> {
   BuildContext _ctx;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  int _selectedDrawerIndex = 0;
+  int _selectedDrawerIndex = 1;
+
+  Exit() {
+    Navigator.pop(context);
+  }
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
+        return Exit(); // enter normal calculator class here
+        break;
+      case 1:
         return normalCalculator(); // enter normal calculator class here
         break;
+      case 2:
+        return scientificCalculator(); // enter normal calculator class here
+        break;
+      case 3:
+        return WebViewDemo(); // enter normal calculator class here
+        break;
       default:
-        return scientificCalculator(); // enter scientific calculator class here
+        return normalCalculator(); // enter scientific calculator class here
         break;
     }
   }
@@ -79,8 +95,8 @@ class HomeScreenState extends State<HomeScreen> {
           child: new Column(
             children: <Widget>[
               new UserAccountsDrawerHeader(
-                accountName: new Text("Name here"),
-                accountEmail: new Text("@rahwinside"),
+                accountName: new Text("Roshie"),
+                accountEmail: new Text("@rosh"),
                 currentAccountPicture: CircleAvatar(
                   radius: 60.0,
                   backgroundColor: const Color(0xFF778899),
