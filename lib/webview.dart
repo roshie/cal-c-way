@@ -12,6 +12,7 @@ class WebViewDemo extends StatefulWidget {
 
 class _WebViewDemo extends State<WebViewDemo> {
   Completer<WebViewController> _controller = Completer<WebViewController>();
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +24,13 @@ class _WebViewDemo extends State<WebViewDemo> {
             _controller.complete(webViewController);
           },
           onPageStarted: (String url) {
-//            showAlertDialog(context);
+            showAlertDialog(context);
           },
           onPageFinished: (String url) {
-//            try {
-//              Navigator.pop(context);
-//            } catch (e) {
-//              print("Exception");
-//            }
+            count++;
+            if (count == 2){
+              Navigator.of(context).pop();
+            }
           },
           gestureNavigationEnabled: true,
         );

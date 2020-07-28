@@ -22,12 +22,14 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
   String passhelpertext = "";
-  String userhelpertext = "";
 
   _onSubmit() {
 
     if (_password.text == "helloworld") {
       passhelpertext = "";
+      setState(() {
+
+      });
       Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()),);
     }
     else {
@@ -43,7 +45,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.lightBlue, Colors.indigo])),
+          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.orange, Colors.deepOrange, Colors.pink,Colors.purple, Colors.deepPurple, Colors.indigo,Colors.blue])),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Row(
@@ -86,8 +88,6 @@ class _LoginViewState extends State<LoginView> {
                                 hintText: 'Username or email',
                                 hintStyle: TextStyle(color: Colors.white),
                                 labelText: 'Username',
-                                helperText: userhelpertext.toString(),
-                                helperStyle: TextStyle(fontSize: 12, color: Colors.red),
                                 prefixIcon: const Icon(
                                   Icons.person,
                                   color: Colors.white,
@@ -117,7 +117,7 @@ class _LoginViewState extends State<LoginView> {
                                 hintText: 'Password',
                                 hintStyle: TextStyle(color: Colors.white),
                                 helperText: passhelpertext.toString(),
-                                helperStyle: TextStyle(fontSize: 12, color: Colors.red),
+                                helperStyle: TextStyle(fontSize: 12, color: Colors.white),
                                 labelText: 'Password',
                                 prefixIcon: const Icon(
                                   Icons.send,

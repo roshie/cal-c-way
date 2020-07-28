@@ -73,13 +73,19 @@ class HomeScreenState extends State<HomeScreen> {
         );
       }
       drawerOptions.add(new ListTile(
-        leading: new Icon(d.icon),
+        leading: new Icon(d.icon,),
         title: new Text(
           d.title,
-          style: TextStyle(fontFamily: "Poppins"),
+          style: TextStyle(fontFamily: "Poppins",),
+
         ),
+
         selected: i == _selectedDrawerIndex,
-        onTap: () => _onSelectItem(i),
+        onTap: ()  {
+          _onSelectItem(i);
+
+        },
+
       ));
     }
     return new Scaffold(
@@ -87,7 +93,7 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-          iconTheme: new IconThemeData(color: Colors.black)
+          iconTheme: new IconThemeData(color: Colors.deepOrange)
 
       ),
       drawer: new Drawer(
@@ -100,11 +106,12 @@ class HomeScreenState extends State<HomeScreen> {
                 currentAccountPicture: CircleAvatar(
                   radius: 60.0,
                   backgroundColor: const Color(0xFF778899),
-                  backgroundImage: NetworkImage("some URL here"), // for Network image
+                  backgroundImage: NetworkImage("https://i.pinimg.com/564x/b4/0a/f8/b40af8217a7beaa09ed9fee060b68f41.jpg"), // for Network image
                 ),
                 decoration: new BoxDecoration(
-                  color: Color(0xFF222437),
+                  gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.orange, Colors.deepOrange, Colors.pink,Colors.purple, Colors.deepPurple, Colors.indigo,Colors.blue]),
                 ),
+
               ),
               new Column(children: drawerOptions)
             ],
