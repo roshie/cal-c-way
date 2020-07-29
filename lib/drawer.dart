@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_new_app/main.dart';
 import 'package:flutter_new_app/webview.dart';
 import 'scientificcalc.dart';
 import 'normalcalc.dart';
@@ -17,6 +19,7 @@ class HomeScreen extends StatefulWidget {
     new DrawerItem("Normal Calculator", Icons.grid_on),
     new DrawerItem("Scientific Caluclator", Icons.gradient),
     new DrawerItem("Explore Chennai - Website", Icons.web),
+    new DrawerItem("Settings", Icons.settings),
   ];
 
   @override
@@ -48,6 +51,9 @@ class HomeScreenState extends State<HomeScreen> {
         break;
       case 3:
         return WebViewDemo(); // enter normal calculator class here
+        break;
+      case 4:
+        return Settings(); // enter normal calculator class here
         break;
       default:
         return normalCalculator(); // enter scientific calculator class here
@@ -93,7 +99,7 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-          iconTheme: new IconThemeData(color: Colors.deepOrange)
+          iconTheme: new IconThemeData(color: Colors.blue)
 
       ),
       drawer: new Drawer(
@@ -123,6 +129,8 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
 
 
 /////////////////SNACKBAR SCRIPT ////////////////////////////////

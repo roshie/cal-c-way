@@ -17,13 +17,16 @@ class _normalCalculatorState extends State<normalCalculator> {
 
   _operation() {
     if (operator == '+'){
-      input.text = (num1 + num2).toString();print("Added");
+      input.text = (num1 + num2).toString();
     }
     if (operator == '-'){
       input.text = (num1 - num2).toString();
     }
     if (operator == '*'){
       input.text = (num1 * num2).toString();
+    }
+    if (operator == '%'){
+      input.text = (num1 * (num2 * 0.01)).toString();
     }
     if (operator == '/'){
       if (num2 == 0){
@@ -44,6 +47,11 @@ class _normalCalculatorState extends State<normalCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.white, Colors.white, Color(0xffFFDBC6)]
+          ),
+        ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -98,8 +106,10 @@ class _normalCalculatorState extends State<normalCalculator> {
                               borderRadius: BorderRadius.all(Radius.circular(100)),
                               gradient: LinearGradient(colors: [Colors.orange,Colors.deepOrange])
                           ),
-                          child: Center(child: Text("A", style: TextStyle(color: Colors.white, fontSize: 30),))),
+                          child: Center(child: Text("%", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
+                        input.text += "%";
+                        operator = '%';
                       },
                     ),
                     MaterialButton(
@@ -149,7 +159,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                         ),
                           child: Center(child: Text("9", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "9";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "9";}
+                        else {
+                          input.text += "9";
+                        }
                       },
                     ),
                     MaterialButton(
@@ -163,7 +177,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("8", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "8";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "8";}
+                        else {
+                          input.text += "8";
+                        }
                       },
                     ),
                     MaterialButton(
@@ -177,7 +195,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("7", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "7";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "7";}
+                        else {
+                          input.text += "7";
+                        }
                       },
                     ),
                     MaterialButton(
@@ -213,7 +235,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("6", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "6";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "6";}
+                        else {
+                          input.text += "6";
+                        }
                       },
                     ),
                     MaterialButton(
@@ -227,7 +253,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("5", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "5";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "5";}
+                        else {
+                          input.text += "5";
+                        }
                       },
                     ),
                     MaterialButton(
@@ -241,7 +271,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("4", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "4";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "4";}
+                        else {
+                          input.text += "4";
+                        }
                       },
                     ),
                     MaterialButton(
@@ -277,7 +311,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("3", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "3";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "3";}
+                        else {
+                          input.text += "3";
+                        }
                       },
                     ),
                     MaterialButton(
@@ -291,7 +329,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("2", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "2";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "2";}
+                        else {
+                          input.text += "2";
+                        };
                       },
                     ),
                     MaterialButton(
@@ -305,7 +347,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("1", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "1";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "1";}
+                        else {
+                          input.text += "1";
+                        }
                       },
                     ),
                     MaterialButton(
@@ -355,7 +401,11 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("0", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        input.text += "0";
+                        if (input.text == "0" || input.text == "00" || input.text == " ")
+                        {input.text = "0";}
+                        else {
+                          input.text += "0";
+                        }
                       },
                     ),
                     MaterialButton(
@@ -388,7 +438,7 @@ class _normalCalculatorState extends State<normalCalculator> {
                           ),
                           child: Center(child: Text("=", style: TextStyle(color: Colors.white, fontSize: 30),))),
                       onPressed: () {
-                        num2 = double.parse(input.text);
+                        num2 = double.parse(input.text.replaceAll('%', ''));
                         _operation();
                       },
                     ),

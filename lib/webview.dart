@@ -12,7 +12,7 @@ class WebViewDemo extends StatefulWidget {
 
 class _WebViewDemo extends State<WebViewDemo> {
   Completer<WebViewController> _controller = Completer<WebViewController>();
-  int count = 0;
+  int count = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
