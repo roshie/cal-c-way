@@ -109,6 +109,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  quartet:
+    dependency: "direct main"
+    description:
+      name: quartet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   quiver:
     dependency: transitive
     description:
@@ -184,13 +191,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
-  virtual_keyboard:
-    dependency: "direct main"
-    description:
-      name: virtual_keyboard
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
   webview_flutter:
     dependency: "direct main"
     description:
