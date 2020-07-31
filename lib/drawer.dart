@@ -117,7 +117,6 @@ class HomeScreenState extends State<HomeScreen> {
                 decoration: new BoxDecoration(
                   gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.orange, Colors.deepOrange, Colors.pink,Colors.purple, Colors.deepPurple, Colors.indigo,Colors.blue]),
                 ),
-
               ),
               new Column(children: drawerOptions)
             ],
