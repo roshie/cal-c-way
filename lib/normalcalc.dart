@@ -15,10 +15,18 @@ class _normalCalculatorState extends State<normalCalculator> {
   double num1 = 0;
   double num2 = 0;
 
-  backspace(String input) {
-    int n = input.length;
-    String sliced = input.substring(0, n-1);
-    return sliced;
+  backspace(String Input) {
+    int n = Input.length;
+    String erased = substr(Input,-1,1);
+    if (erased == '+' || erased == '-' || erased == 'X' || erased == '/' || erased == '%') {
+      String sliced = Input.substring(0, n - 1);
+      operator='';
+      input.text = num1.toString();
+      return sliced;
+    }else{
+      String sliced = Input.substring(0, n - 1);
+      return sliced;
+    }
   }
   clear() {
     input.text= "0";
@@ -30,30 +38,30 @@ class _normalCalculatorState extends State<normalCalculator> {
 
   _operation() {
     if (operator == '+'){
-      String output = (num1 + num2).toString();
-      String sliced_op = substr(output, -2, 2);
-      if (sliced_op == ".0"){
-        input.text = output.replaceAll(".0", '');
+      String output = (num1 + num2).toStringAsFixed(4).toString();
+      String sliced_op = substr(output, -5, 5);
+      if (sliced_op == ".0000"){
+        input.text = output.replaceAll(".0000", '');
       }
       else {
         input.text = output;
       }
     }
     if (operator == '-'){
-      String output = (num1 - num2).toString();
-      String sliced_op = substr(output, -2, 2);
-      if (sliced_op == ".0"){
-        input.text = output.replaceAll(".0", '');
+      String output = (num1 - num2).toStringAsFixed(4).toString();
+      String sliced_op = substr(output, -5, 5);
+      if (sliced_op == ".0000"){
+        input.text = output.replaceAll(".0000", '');
       }
       else {
         input.text = output;
       }
     }
     if (operator == '*'){
-      String output = (num1 * num2).toString();
-      String sliced_op = substr(output, -2, 2);
-      if (sliced_op == ".0"){
-        input.text = output.replaceAll(".0", '');
+      String output = (num1 * num2).toStringAsFixed(4).toString();
+      String sliced_op = substr(output, -5, 5);
+      if (sliced_op == ".0000"){
+        input.text = output.replaceAll(".0000", '');
       }
       else {
         input.text = output;
@@ -73,19 +81,18 @@ class _normalCalculatorState extends State<normalCalculator> {
       if (num2 == 0){
         Toast.show("A Number cannot be divided by zero", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
       }else {
-        String output = (num1 / num2).toString();
-        String sliced_op = substr(output, -2, 2);
-        if (sliced_op == ".0"){
-          input.text = output.replaceAll(".0", '');
+        String output = (num1 / num2).toStringAsFixed(4).toString();
+        String sliced_op = substr(output, -5, 5);
+        if (sliced_op == ".0000"){
+          input.text = output.replaceAll(".0000", '');
         }
         else {
           input.text = output;
         }
       }
-      setState(() {
-      });
-
     }
+    setState(() {
+    });
     operator = '';
 }
 
@@ -106,7 +113,7 @@ class _normalCalculatorState extends State<normalCalculator> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    str,style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 30), textAlign: TextAlign.end,
+                    str,style: TextStyle(color: Colors.deepOrange, fontSize: 60), textAlign: TextAlign.end,
                   ),
                 ),
 
@@ -124,8 +131,8 @@ class _normalCalculatorState extends State<normalCalculator> {
                     showCursor: true,
                     readOnly: true,
                     style: new TextStyle(
-                        color: Colors.deepOrange,
-                        fontSize: 60
+                        color: Colors.deepOrangeAccent,
+                        fontSize: 30
                     ),
                   ),
                 ),
@@ -180,13 +187,13 @@ class _normalCalculatorState extends State<normalCalculator> {
                           str+='/';
                           if (operator == ''){
                           operator = '/';
-                          num1 = double.parse(input.text);
+                          if (input.text != '') num1 = double.parse(input.text);
                           input.text = "0";}
                           else {
                             num2 = double.parse(input.text.replaceAll('%', ''));
                             _operation();
                             operator = '/';
-                            num1 = double.parse(input.text);
+                            if (input.text != '') num1 = double.parse(input.text);
                             input.text = "0";
                           }
                           setState(() {});
@@ -204,14 +211,18 @@ class _normalCalculatorState extends State<normalCalculator> {
                             child: Center(child: Icon(Icons.backspace, color: Colors.white,))),
                         onPressed: () {
                           if (input.text == "" || input.text == "0"){
-
                           }
                           else {
-                          String stri = input.text;
-                          input.text = backspace(stri);
-                          str = backspace(str);
+                            input.text = backspace(input.text);
+                            if (input.text == "") input.text = "0";
+                          }
+                          if (str == "" || str == "0"){
+                          }
+                          else {
+                            str = backspace(str);
+                          }
                           setState(() {});
-                        }},
+                        },
                       ),
 
                     ],
@@ -294,13 +305,13 @@ class _normalCalculatorState extends State<normalCalculator> {
                         onPressed: () {
                           if (operator == ''){
                             operator = '*';
-                            num1 = double.parse(input.text);
+                            if (input.text != '') num1 = double.parse(input.text);
                             input.text = "0";}
                           else {
                             num2 = double.parse(input.text.replaceAll('%', ''));
                             _operation();
                             operator = '*';
-                            num1 = double.parse(input.text);
+                            if (input.text != '') num1 = double.parse(input.text);
                             input.text = "0";
                           }
                           str +="X";
@@ -386,13 +397,13 @@ class _normalCalculatorState extends State<normalCalculator> {
                         onPressed: () {
                           if (operator == ''){
                             operator = '-';
-                            num1 = double.parse(input.text);
+                            if (input.text != '') num1 = double.parse(input.text);
                             input.text = "0";}
                           else {
                             num2 = double.parse(input.text.replaceAll('%', ''));
                             _operation();
                             operator = '-';
-                            num1 = double.parse(input.text);
+                            if (input.text != '') num1 = double.parse(input.text);
                             input.text = "0";
                           }
                           str +="-";
@@ -477,13 +488,13 @@ class _normalCalculatorState extends State<normalCalculator> {
                         onPressed: () {
                           if (operator == ''){
                             operator = '+';
-                            num1 = double.parse(input.text);
+                            if (input.text != '') num1 = double.parse(input.text);
                             input.text = "0";}
                           else {
                             num2 = double.parse(input.text.replaceAll('%', ''));
                             _operation();
                             operator = '+';
-                            num1 = double.parse(input.text);
+                            if (input.text != '') num1 = double.parse(input.text);
                             input.text = "0";
                           }
                           str +="+";
@@ -565,9 +576,10 @@ class _normalCalculatorState extends State<normalCalculator> {
                             ),
                             child: Center(child: Text("=", style: TextStyle(color: Colors.white, fontSize: 30),))),
                         onPressed: () {
-                          num2 = double.parse(input.text.replaceAll('%', ''));
+                          if (operator != ''){
+                            num2 = double.parse(input.text.replaceAll('%', ''));
                           _operation();
-                          str = "";
+                          str = ""; }
                           setState(() {
 
                           });

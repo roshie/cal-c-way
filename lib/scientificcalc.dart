@@ -11,50 +11,112 @@ class _scientificCalculatorState extends State<scientificCalculator> {
   TextEditingController input = TextEditingController();
   String str = "";
   String operator = '';
+  String function = "";
   double num1 = 0;
   double num2 = 0;
+  double num = 0;
 
 
-  backspace(String input) {
-    int n = input.length;
-    String sliced = input.substring(0, n-1);
-    return sliced;
+  backspace(String Input) {
+    int n = Input.length;
+    String erased = substr(Input,-1,1);
+    if (erased == '+' || erased == '-' || erased == 'X' || erased == '/' || erased == '%' || erased == '^') {
+      String sliced = Input.substring(0, n - 1);
+      operator='';
+      input.text = num1.toString();
+      return sliced;
+    }else
+    if (erased == 'n' || erased == 's'|| erased =='e' || erased == '¹' || erased == 'g' || erased == '√'){
+      if (erased =='e' || erased == '√') {
+      String sliced = Input.substring(0, n - 1);
+      function ='';
+      return sliced;}
+      else if (erased == 'n' || erased == 's'|| erased == 'g') {
+        String sliced = Input.substring(0, n - 3);
+        function ='';
+        return sliced;
+      }
+      else if (erased == '¹') {
+        String sliced = Input.substring(0, n - 5);
+        function ='';
+        return sliced;
+      }
+    }
+    else {
+      String sliced = Input.substring(0, n - 1);
+      return sliced;
+    }
+
+
   }
 
   clear() {
     input.text= "0";
     str = "";
     operator = '';
+    function = "";
     num1 = 0; num2 = 0;
     setState(() {});
   }
 
+  _function(double num, String function) {
+    if (function == "sin"){
+      return double.parse(sin(num*0.0175).toStringAsFixed(4));
+    }
+    if (function == "cos"){
+      return double.parse(cos(num*0.0175).toStringAsFixed(4));
+    }
+    if (function == "tan"){
+      return double.parse(tan(num*0.0175).toStringAsFixed(4));
+    }
+    if (function == "asin"){
+      return double.parse(asin(num).toStringAsFixed(4));
+    }
+    if (function == "acos"){
+      return double.parse(acos(num).toStringAsFixed(4));
+    }
+    if (function == "atan"){
+      return double.parse(atan(num).toStringAsFixed(4));
+    }
+    if (function == "sqrt"){
+      return double.parse(sqrt(num).toStringAsFixed(4));
+    }
+    if (function == "log"){
+      return double.parse(log(num).toStringAsFixed(4));
+    }
+    if (function == "exp"){
+      return double.parse(exp(num).toStringAsFixed(4));
+    }
+
+
+  }
+
   _operation() {
     if (operator == '+'){
-      String output = (num1 + num2).toString();
-      String sliced_op = substr(output, -2, 2);
-      if (sliced_op == ".0"){
-        input.text = output.replaceAll(".0", '');
+      String output = (num1 + num2).toStringAsFixed(4).toString();
+      String sliced_op = substr(output, -5, 5);
+      if (sliced_op == ".0000"){
+        input.text = output.replaceAll(".0000", '');
       }
       else {
         input.text = output;
       }
     }
     if (operator == '-'){
-      String output = (num1 - num2).toString();
-      String sliced_op = substr(output, -2, 2);
-      if (sliced_op == ".0"){
-        input.text = output.replaceAll(".0", '');
+      String output = (num1 - num2).toStringAsFixed(4).toString();
+      String sliced_op = substr(output, -5, 5);
+      if (sliced_op == ".0000"){
+        input.text = output.replaceAll(".0000", '');
       }
       else {
         input.text = output;
       }
     }
     if (operator == '*'){
-      String output = (num1 * num2).toString();
-      String sliced_op = substr(output, -2, 2);
-      if (sliced_op == ".0"){
-        input.text = output.replaceAll(".0", '');
+      String output = (num1 * num2).toStringAsFixed(4).toString();
+      String sliced_op = substr(output, -5, 5);
+      if (sliced_op == ".0000"){
+        input.text = output.replaceAll(".0000", '');
       }
       else {
         input.text = output;
@@ -70,24 +132,33 @@ class _scientificCalculatorState extends State<scientificCalculator> {
         input.text = output;
       }
     }
+    if (operator == "^"){
+      String output = pow(num1, num2).toString();
+      String sliced_op = substr(output, -2, 2);
+      if (sliced_op == ".0"){
+        input.text = output.replaceAll(".0", '');
+      }
+      else {
+        input.text = output;
+      }
+    }
     if (operator == '/'){
       if (num2 == 0){
         Toast.show("A Number cannot be divided by zero", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
       }else {
-        String output = (num1 / num2).toString();
-        String sliced_op = substr(output, -2, 2);
-        if (sliced_op == ".0"){
-          input.text = output.replaceAll(".0", '');
+        String output = (num1 / num2).toStringAsFixed(4).toString();
+        String sliced_op = substr(output, -5, 5);
+        if (sliced_op == ".0000"){
+          input.text = output.replaceAll(".0000", '');
         }
         else {
           input.text = output;
         }
       }
-      setState(() {
-      });
     }
+    setState(() {
+    });
     operator = '';
-    str = "";
   }
 
   @override
@@ -109,7 +180,7 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    str,style: TextStyle(color: Colors.purple, fontSize: 30), textAlign: TextAlign.end,
+                    str,style: TextStyle(color: Colors.deepPurple, fontSize: 60), textAlign: TextAlign.end,
                   ),
                 ),
                 Container(
@@ -126,8 +197,8 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                     showCursor: true,
                     readOnly: true,
                     style: new TextStyle(
-                        color: Colors.deepPurple,
-                        fontSize: 60
+                        color: Colors.purpleAccent,
+                        fontSize: 30
                     ),
                   ),
                 ),
@@ -154,7 +225,15 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                   ))),
                         ),
                         onPressed: () {
-                          input.text = "0";
+                          if (input.text == "" || input.text == " " || input.text == "0")
+                          {input.text = sqrt2.toStringAsFixed(4).toString();}
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            input.text = sqrt2.toStringAsFixed(4).toString();
+                          }
+                          str += "√2";
+                          setState(() {});
                         },
                       ),
                     ),
@@ -176,7 +255,17 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                     style: TextStyle(color: Colors.white, fontSize: 30),
                                   ))),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (input.text == "" || input.text == " " || input.text == "0")
+                          {input.text = ln2.toStringAsFixed(4).toString();}
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            input.text = ln2.toStringAsFixed(4).toString();
+                          }
+                          str += "ln2";
+                          setState(() {});
+                        },
                       ),
                     ),
                     Expanded(
@@ -197,7 +286,17 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                     style: TextStyle(color: Colors.white, fontSize: 30),
                                   ))),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (input.text == "" || input.text == " " || input.text == "0")
+                          {input.text = log10e.toStringAsFixed(4).toString();}
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            input.text = log10e.toStringAsFixed(4).toString();
+                          }
+                          str += "log₁₀e";
+                          setState(() {});
+                        },
                       ),
                     ),
                     Expanded(
@@ -218,9 +317,15 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                     style: TextStyle(color: Colors.white, fontSize: 30),
                                   ))),
                         ),
-                        onPressed: () {
-                          input.text = "0";
-                        },
+                        onPressed: ()  {if (input.text == "" || input.text == " " || input.text == "0")
+                                    {input.text = pi.toStringAsFixed(4).toString();}
+                                    else {
+                                    num1 = double.parse(input.text);
+                                    operator = "*";
+                                    input.text = pi.toStringAsFixed(4).toString();
+                        }
+                        str += "π";
+                        setState(() {});}
                       ),
                     ),
                     Expanded(
@@ -241,11 +346,16 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                           if (input.text == "" || input.text == "0"){
                           }
                           else {
-                            String stri = input.text;
-                            input.text = backspace(stri);
+                            input.text = backspace(input.text);
+                            if (input.text == "") input.text = "0";
+                          }
+                          if (str == "" || str == "0"){
+                          }
+                          else {
                             str = backspace(str);
+                          }
                             setState(() {});
-                          }},
+                          },
                       ),
                     ),
                   ],
@@ -271,7 +381,19 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                   ))),
                         ),
                         onPressed: () {
-                          input.text = "0";
+                          if (input.text == "0" || input.text == "00" || input.text == " " || input.text == "")
+                          {str += "sin";
+                          function = "sin";
+                          }
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            str += "sin";
+                            function = "sin";
+                            input.text = "0";
+                          }
+
+                          setState(() {});
                         },
                       ),
                     ),
@@ -293,7 +415,20 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                     style: TextStyle(color: Colors.white, fontSize: 30),
                                   ))),
                         ),
-                        onPressed: () {},
+                        onPressed: () {if (input.text == "0" || input.text == "00" || input.text == " " || input.text == "")
+                        {str += "cos";
+                        function = "cos";
+                        }
+                        else {
+                          num1 = double.parse(input.text);
+                          operator = "*";
+                          str += "cos";
+                          function = "cos";
+                          input.text = "0";
+                        }
+
+                        setState(() {});
+                        },
                       ),
                     ),
                     Expanded(
@@ -314,7 +449,20 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                     style: TextStyle(color: Colors.white, fontSize: 30),
                                   ))),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (input.text == "0" || input.text == "00" || input.text == " " || input.text == "")
+                          {str += "tan";
+                          function = "tan";
+                          }
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            str += "tan";
+                            function = "tan";
+                            input.text = "0";
+                          }
+                          setState(() {});
+                        },
                       ),
                     ),
                     Expanded(
@@ -336,9 +484,21 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                   ))),
                         ),
                         onPressed: () {
-                          num1 = double.parse(input.text);
-                          input.text = "0";
-                          operator = '/';
+                          str += "^";
+                          if (operator == ''){
+                            operator = '^';
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = "0";}
+                          else {
+                            num2 = double.parse(input.text.replaceAll('%', ''));
+                            _operation();
+                            operator = '^';
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = "0";
+                          }
+                          setState(() {
+
+                          });
                         },
                       ),
                     ),
@@ -362,20 +522,24 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                         ),
                         onPressed: () {
                           str += "/";
-                            if (operator == ''){
-                            operator = '/';
-                            num1 = double.parse(input.text);
-                            input.text = "0";}
-                            else {
-                              num2 = double.parse(input.text.replaceAll('%', ''));
-                              _operation();
-                              operator = '/';
-                              num1 = double.parse(input.text);
-                              input.text = "0";
-                            }
+                          setState(() {});
+                          if (function != ""){
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = _function(num1,function).toString();
+                            function = "";
                             setState(() {
-
                             });
+                          }
+                          if (operator == ''){
+                            operator = '/';
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = "0";}
+                          else {
+                            num2 = double.parse(input.text.replaceAll('%', ''));
+                            _operation();
+                            operator = '/';
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = "0"; }
                         },
                       ),
                     ),
@@ -402,7 +566,18 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                   ))),
                         ),
                         onPressed: () {
-                          input.text = "0";
+                          if (input.text == "0" || input.text == "00" || input.text == " " || input.text == "")
+                          {str += "sin⁻¹";
+                          function = "asin";
+                          }
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            str += "sin⁻¹";
+                            function = "asin";
+                            input.text = "0";
+                          }
+                          setState(() {});
                         },
                       ),
                     ),
@@ -424,7 +599,20 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                     style: TextStyle(color: Colors.white, fontSize: 30),
                                   ))),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (input.text == "0" || input.text == "00" || input.text == " " || input.text == "")
+                          {str += "cos⁻¹";
+                          function = "acos";
+                          }
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            str += "cos⁻¹";
+                            function = "acos";
+                            input.text = "0";
+                          }
+                          setState(() {});
+                        },
                       ),
                     ),
                     Expanded(
@@ -444,7 +632,20 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                     style: TextStyle(color: Colors.white, fontSize: 30),
                                   ))),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (input.text == "0" || input.text == "00" || input.text == " " || input.text == "")
+                          {str += "tan⁻¹";
+                          function = "atan";
+                          }
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            str += "tan⁻¹";
+                            function = "atan";
+                            input.text = "0";
+                          }
+                          setState(() {});
+                        },
                       ),
                     ),
 
@@ -467,9 +668,18 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                   ))),
                         ),
                         onPressed: () {
-                          num1 = double.parse(input.text);
-                          input.text = "0";
-                          operator = '/';
+                          if (input.text == "0" || input.text == "00" || input.text == " " || input.text == "")
+                          {str += "√";
+                          function = "sqrt";
+                          }
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            str += "√";
+                            function = "sqrt";
+                            input.text = "0";
+                          }
+                          setState(() {});
                         },
                       ),
                     ),
@@ -490,7 +700,6 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                           operator = '%';
                           str += '%';
                           setState(() {
-
                           });
                         },
                       ),
@@ -604,9 +813,18 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                               ))),
                         ),
                         onPressed: () {
-                          //num1 = double.parse(input.text);
-                          input.text += "%";
-                          operator = '%';
+                          if (input.text == "0" || input.text == "00" || input.text == " " || input.text == "")
+                          {str += "log";
+                          function = "log";
+                          }
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            str += "log";
+                            function = "log";
+                            input.text = "0";
+                          }
+                          setState(() {});
                         },
                       ),
                     ),
@@ -631,15 +849,22 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                         onPressed: () {
                           str += "X";
                           setState(() {});
-                            if (operator == ''){
+                          if (function != ""){
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = _function(num1,function).toString();
+                            function = "";
+                            setState(() {
+                            });
+                          }
+                          if (operator == ''){
                             operator = '*';
-                            num1 = double.parse(input.text);
+                            if (input.text != "") num1 = double.parse(input.text);
                             input.text = "0";}
-                            else {
+                          else {
                             num2 = double.parse(input.text.replaceAll('%', ''));
                             _operation();
                             operator = '*';
-                            num1 = double.parse(input.text);
+                            if (input.text != "") num1 = double.parse(input.text);
                             input.text = "0"; }
                         },
                       ),
@@ -754,7 +979,18 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                   ))),
                         ),
                         onPressed: () {
-                          input.text = "0";
+                          if (input.text == "0" || input.text == "00" || input.text == " " || input.text == "")
+                          {str += "e^";
+                          function = "exp";
+                          }
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            str += "e^";
+                            function = "exp";
+                            input.text = "0";
+                          }
+                          setState(() {});
                         },
                       ),
                     ),
@@ -779,16 +1015,23 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                         onPressed: () {
                           str += "-";
                           setState(() {});
-                              if (operator == ''){
-                              operator = '-';
-                              num1 = double.parse(input.text);
-                              input.text = "0";}
-                              else {
-                              num2 = double.parse(input.text.replaceAll('%', ''));
-                              _operation();
-                              operator = '-';
-                              num1 = double.parse(input.text);
-                              input.text = "0"; }
+                          if (function != ""){
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = _function(num1,function).toString();
+                            function = "";
+                            setState(() {
+                            });
+                          }
+                          if (operator == ''){
+                            operator = '-';
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = "0";}
+                          else {
+                            num2 = double.parse(input.text.replaceAll('%', ''));
+                            _operation();
+                            operator = '-';
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = "0"; }
                         },
                       ),
                     ),
@@ -901,7 +1144,19 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                                     style: TextStyle(color: Colors.white, fontSize: 30),
                                   ))),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (input.text == "" || input.text == " " || input.text == "0")
+                          {input.text = e.toStringAsFixed(4).toString();}
+                          else {
+                            num1 = double.parse(input.text);
+                            operator = "*";
+                            input.text = e.toStringAsFixed(4).toString();
+                          }
+                          str += "e";
+                          setState(() {
+
+                          });
+                        },
                       ),
                     ),
                     Expanded(
@@ -925,15 +1180,25 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                         onPressed: () {
                           str += "+";
                           setState(() {});
+                          if (function != ""){
+                            if (input.text != "") num1 = double.parse(input.text);
+                            input.text = _function(num1,function).toString();
+                            function = "";
+                            setState(() {
+                            });
+                          }
                           if (operator == ''){
                           operator = '+';
-                          num1 = double.parse(input.text);
+                          if (input.text != "")
+                          {
+                            num1 = double.parse(input.text);
+                          }
                           input.text = "0";}
                           else {
                           num2 = double.parse(input.text.replaceAll('%', ''));
                           _operation();
                           operator = '+';
-                          num1 = double.parse(input.text);
+                          if (input.text != "") num1 = double.parse(input.text);
                           input.text = "0"; }
                         },
                       ),
@@ -984,15 +1249,9 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                               ))),
                         ),
                         onPressed: () {
-                          if (input.text == "0" || input.text == "00" || input.text == " ")
-                          {input.text = "0";
-                          str = "0";
-                          setState(() {});}
-                          else {
                             input.text += "0";
                             str += "0";
                             setState(() {});
-                          };
                         },
                       ),
                     ),
@@ -1076,10 +1335,28 @@ class _scientificCalculatorState extends State<scientificCalculator> {
                               ))),
                         ),
                         onPressed: () {
-                          num2 = double.parse(input.text.replaceAll('%', ''));
-                          _operation();
                           str = "";
-                          setState(() {});
+                          if (function!= ""){
+                            num = double.parse(input.text.replaceAll('%', ''));
+                            num2 = _function(num,function);
+                            input.text = num2.toString();
+                            if (operator!= '') {
+                              num2 = double.parse(input.text.replaceAll('%', ''));
+                              _operation();
+                              str = "";
+                              setState(() {}); }
+                            str = "";
+                            setState(() {});
+                          }else
+                          if (operator!= '') {
+                            num2 = double.parse(input.text.replaceAll('%', ''));
+                            _operation();
+                            str = "";
+                            setState(() {}); }
+                          setState(() {
+
+                          });
+
                         },
                       ),
                     ),
